@@ -2,19 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>贪吃蛇</title>
         <link rel="stylesheet" href="css/main.css">
     </head>
 
     <body>
-        <div class='help'>
-            <p>操作说明：</p>
-            <p>（按键）W-S-A-D：上-下-左-右，Q：暂停/开始</p>
-            <p>（鼠标）点击开始游戏按钮进行游戏，点击蓝色区域暂停游戏，点击中心按钮继续游戏</p>
-        </div>
         <div class="content">
-            <div class="btn startBtn"><button></button></div>
-            <div class="btn pauseBtn"><button></button></div>
+            <div class='helpWrap'>
+                <div class='help'>
+                    <span class="close">X</span>
+                    <p>操作说明：</p>
+                    <p>（鼠标/触屏）点击“开始游戏”按钮开始游戏,单击控制蛇头转向，双击暂停/继续游戏</p>
+                    <p>（按键）W-S-A-D：上-下-左-右，Q：暂停/开始</p>
+                </div>
+            </div>
+            <div class="btn startBtn"><button>开始游戏</button></div>
+            <div class="btn pauseBtn"><button disabled = 'true'>暂停游戏</button></div>
+            <div class="btn helpBtn"><button>操作说明</button></div>
             <div class="scoreWrap"><span>Score: </span><span id='score'>0</span></div>
             <div id="snakeWrap">
                 <!-- <div class="snakeHead"></div>
@@ -23,7 +27,8 @@
             </div>
         </div>
 
-
-        <script src="js/main.js"></script>
+        <script src="js/setting.js"></script>
+        <script src="js/game.js"></script>
+        
     </body>
 </html>
