@@ -126,4 +126,26 @@
 }
 
 
+.hide {
+    display: none;
+}
 
+.mask {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.25);
+    position: absolute;
+    z-index: 12;
+    top: 0;
+    text-align: center;
+}
+
+.mask p{
+    width: 20%;
+    color: white;
+    margin: 50% auto;
+    padding: 2%;
+    transform: translate(0, -50%);
+    border: 1px solid white;
+    border-radius: 50%;
+}

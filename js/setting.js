@@ -3,17 +3,21 @@
 // 关闭操作说明
 var closeZone = document.getElementsByClassName('close');
 closeZone[0].onclick = function() {
-    this.parentNode.style.display = 'none';
+    // this.parentNode.className = this.parentNode.className + ' hide';
+    
+    this.parentNode.classList.add('hide');
+    console.log(this.parentNode.classList)
     // removeGreyBackground();
 }
 
 // 打开操作说明
 var helpBtn = document.querySelector('.helpBtn button');
 helpBtn.onclick = function(){
-    if (closeZone[0].parentNode.style.display == 'none'){
-        closeZone[0].parentNode.style.display = 'block';
+    let classList = closeZone[0].parentNode.classList;
+    if (classList.contains('hide')){
+        classList.remove('hide');
     } else {
-        closeZone[0].parentNode.style.display ='none';
+        classList.add('hide');
     }
 }
 

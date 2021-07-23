@@ -301,8 +301,8 @@ Game.prototype.end = function(){
     startBtn.disabled = false;
     pauseBtn.disabled = true;
     let closeZone = document.getElementsByClassName('close');
-    closeZone[0].parentNode.parentNode.style.display = 'block';
-    closeZone[0].parentNode.style.display = 'block';
+    closeZone[0].parentNode.parentNode.classList.remove('hide');
+    closeZone[0].parentNode.classList.remove('hide');
 
     document.removeEventListener("dblclick", operationMode.pauseClick);
     document.removeEventListener("keydown", operationMode.keyboardMode);
@@ -316,10 +316,10 @@ var pauseBtn = document.querySelector('.pauseBtn button');
 var helpBtn = document.querySelector('.helpBtn button');
 startBtn.onclick = function(){
     let closeZone = document.getElementsByClassName('close');
-    closeZone[0].parentNode.parentNode.style.display = 'none';
+    closeZone[0].parentNode.parentNode.classList.add('hide');
     this.disabled = true;
     pauseBtn.disabled = false;
-    helpBtn.parentNode.style.display = 'none';
+    helpBtn.parentNode.classList.add('hide');
     game.init();
 }
 
@@ -340,23 +340,9 @@ pauseBtn.onclick = function(){
 function createMask(){
     var myDiv = document.createElement('div');
     var myP = document.createElement('p');
-    myDiv.style.width = '100%';
-    myDiv.style.height = '100%';
-    myDiv.style.backgroundColor = 'rgba(0,0,0,0.25)';
-    myDiv.style.position = 'absolute';
-    myDiv.style.zIndex = 12;
-    myDiv.style.top = 0;
-    myDiv.style.textAlign = 'center';
-
+    myDiv.classList.add('mask');
 
     myP.innerHTML = '游戏暂停中...';
-    myP.style.width = '20%';
-    myP.style.color = 'white';
-    myP.style.margin = '50% auto';
-    myP.style.padding = '2%';
-    myP.style.transform = 'translate(0, -50%)';
-    myP.style.border = '1px solid white';
-    myP.style.borderRadius = '50%';
     myDiv.appendChild(myP);
     // content.appendChild(myDiv);
     // document.createElement('p')
@@ -365,8 +351,6 @@ function createMask(){
 
 var mask = createMask();
 var content = document.querySelector('.content');
-// content.appendChild(mask);
-// content.removeChild(mask);
 
 
 
