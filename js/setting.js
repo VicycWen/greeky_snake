@@ -87,6 +87,25 @@ function calculateDirection(x0,y0,x1,y1){
         }
     }
 }
+
+function getElementPagePosition(element){
+    //计算x坐标
+    var actualLeft = element.offsetLeft;
+    var current = element.offsetParent;
+    while (current !== null){
+      actualLeft += current.offsetLeft;
+      current = current.offsetParent;
+    }
+    //计算y坐标
+    var actualTop = element.offsetTop;
+    var current = element.offsetParent;
+    while (current !== null){
+      actualTop += (current.offsetTop+current.clientTop);
+      current = current.offsetParent;
+    }
+    //返回结果
+    return {x: actualLeft, y: actualTop}
+  }
   
 operationMode.keyboardMode = function(ev){
     // alert(ev.code); // 显示键盘字符串

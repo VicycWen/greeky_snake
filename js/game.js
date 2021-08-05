@@ -231,82 +231,16 @@ function Game(){
 }
 
 Game.prototype.init = function(){
-    snake.init();
-    createFood();    
-
-    // document.onkeydown = function(ev){
-    //     if (ev.key == 48){
-    //       console.log('left');  
-    //     }
-    // }
-    document.addEventListener("keydown", operationMode.keyboardMode);
-    document.addEventListener("dblclick", operationMode.pauseClick);
-
-    this.start();
+    this.gameStatusChange('init');
 }
-
-function getElementPagePosition(element){
-    //计算x坐标
-    var actualLeft = element.offsetLeft;
-    var current = element.offsetParent;
-    while (current !== null){
-      actualLeft += current.offsetLeft;
-      current = current.offsetParent;
-    }
-    //计算y坐标
-    var actualTop = element.offsetTop;
-    var current = element.offsetParent;
-    while (current !== null){
-      actualTop += (current.offsetTop+current.clientTop);
-      current = current.offsetParent;
-    }
-    //返回结果
-    return {x: actualLeft, y: actualTop}
-  }
-
-
 Game.prototype.start = function(){
-    document.addEventListener('click',operationMode.clickMode);
-    try {
-        content.removeChild(mask);
-    } catch (e){
-        
-    }
-
-    this.timer = setInterval(function(){
-        snake.getNextPos();
-    },200)
+    this.gameStatusChange('start');
 }
 Game.prototype.pause = function(){
-    clearInterval(this.timer);
-    document.removeEventListener('click', operationMode.clickMode);    
-
-    content.appendChild(mask);
+    this.gameStatusChange('pause');
 }
-
 Game.prototype.end = function(){
-    clearInterval(this.timer);
-    // snake.remove();
-    // food.remove();
-    let snakeWrap = document.querySelector('#snakeWrap');
-    snakeWrap.innerHTML = '';
-    snake = new Snake();
-    game = new Game();
-
-    alert("你的得分：" + this.score);
-
-    var scoreDom = document.getElementById('score');
-    scoreDom.innerHTML = '0';
-
-    startBtn.disabled = false;
-    pauseBtn.disabled = true;
-    let closeZone = document.getElementsByClassName('close');
-    closeZone[0].parentNode.parentNode.classList.remove('hide');
-    closeZone[0].parentNode.classList.remove('hide');
-
-    document.removeEventListener("dblclick", operationMode.pauseClick);
-    document.removeEventListener("keydown", operationMode.keyboardMode);
-    document.removeEventListener('click', operationMode.clickMode);   
+    this.gameStatusChange('end');
 }
 
 // 开始游戏
@@ -314,18 +248,39 @@ game = new Game();
 var startBtn = document.querySelector('.startBtn button');
 var pauseBtn = document.querySelector('.pauseBtn button');
 var helpBtn = document.querySelector('.helpBtn button');
+startBtn.onmousemove = function(){return addBtnHover.call(this)};
+startBtn.onmouseout = function(){return removeBtnHover.call(this)};
+pauseBtn.onmousemove = function(){return addBtnHover.call(this)};
+pauseBtn.onmouseout = function(){return removeBtnHover.call(this)};
+helpBtn.onmousemove = function(){return addBtnHover.call(this)};
+helpBtn.onmouseout = function(){return removeBtnHover.call(this)};
+
+startBtn.onactive = function(){
+    this.classList.add('btn-active');
+}
+
+function addBtnHover(){
+    this.classList.add('btn-hover');
+}
+function removeBtnHover(){
+    this.classList.remove('btn-hover');
+}
+
 startBtn.onclick = function(){
     let closeZone = document.getElementsByClassName('close');
     closeZone[0].parentNode.parentNode.classList.add('hide');
     this.disabled = true;
+    this.classList.remove('btn-hover');
+
     pauseBtn.disabled = false;
-    helpBtn.parentNode.classList.add('hide');
+    helpBtn.disabled = true;
+    // helpBtn.parentNode.classList.add('hide');
+    
     game.init();
 }
 
 // 暂停游戏
 // var snakeWrap = document.getElementById('snakeWrap');
-
 
 pauseBtn.onclick = function(){
     if (pauseBtn.innerHTML == "暂停游戏"){
@@ -350,8 +305,67 @@ function createMask(){
 }
 
 var mask = createMask();
-var content = document.querySelector('.content');
+var content = document.querySelector('.content'); // body主体div
 
+// 游戏流程
+// init start playing pause end
+Game.prototype.gameStatusChange = function(status){
+    if(status === 'init'){
+        snake.init();
+        createFood();    
 
+        document.addEventListener("keydown", operationMode.keyboardMode);
+        document.addEventListener("dblclick", operationMode.pauseClick);
+
+        pauseBtn.classList.remove('btn-hover');
+        helpBtn.disabled = false;
+
+        this.start();
+    }else if(status === 'start'){
+        document.addEventListener('click',operationMode.clickMode);
+        try {
+            content.removeChild(mask);
+        } catch (e){
+            
+        }
+
+        this.timer = setInterval(function(){
+            snake.getNextPos();
+        },100)
+
+        helpBtn.disabled = true;
+    }else if(status === 'playing'){
+        
+    }else if(status === 'pause'){
+        clearInterval(this.timer);
+        document.removeEventListener('click', operationMode.clickMode);    
+        content.appendChild(mask);
+    }else if(status === 'end'){
+        clearInterval(this.timer);
+        // snake.remove();
+        // food.remove();
+        let snakeWrap = document.querySelector('#snakeWrap');
+        snakeWrap.innerHTML = '';
+        snake = new Snake();
+        game = new Game();
+
+        alert("你的得分：" + this.score);
+
+        var scoreDom = document.getElementById('score');
+        scoreDom.innerHTML = '0';
+
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        helpBtn.disabled = false;
+        pauseBtn.classList.remove('btn-hover');
+        let closeZone = document.getElementsByClassName('close');
+        closeZone[0].parentNode.parentNode.classList.remove('hide');
+        closeZone[0].parentNode.classList.remove('hide');
+
+        document.removeEventListener("dblclick", operationMode.pauseClick);
+        document.removeEventListener("keydown", operationMode.keyboardMode);
+        document.removeEventListener('click', operationMode.clickMode);
+    }
+}
 
 

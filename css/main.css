@@ -51,8 +51,6 @@
     margin-left: 10px;
 }
 
-
-
 .scoreWrap{
     position: absolute;
     right: 50px;
@@ -67,31 +65,43 @@
     top: 0;
 
     z-index: 2;
-    /* background-color: rgba(0, 0, 0, 0.3); */
+    /* background-color: rgba(7, 25, 192, 0.753); */
     /* border: 1px solid red; */
 }
 
 .btn button{
-    background: none;
-    /* border: none; */
+    box-shadow: 2px 4px 4px rgb(165, 164, 164);
     background-size: 100% 100%;
+    border: 0.1px solid black;
+    border-radius: 20px;
     
     cursor: pointer;
     outline: none;
 
     position: absolute;
-    right:  -12%;
-    top: 2%;
+    right:  -100px;
+    top: 16px;
+
+    width: 88px;
+    height: 34px;
+}
+.btn-hover{
+    background-color: #268dc9;
+    color: white;
+}
+.btn-active {
+    box-shadow: 2px 4px 4px rgb(165, 164, 164);
+    transform: translateY(2px);
 }
 
 .startBtn button{
 
 }
 .pauseBtn button{
-    margin-top: 40px;
+    margin-top: 46px;
 }
 .helpBtn button{
-    margin-top: 80px;
+    margin-top: 92px;
 }
 
 #snakeWrap{
