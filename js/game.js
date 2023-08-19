@@ -24,8 +24,9 @@ Square.prototype.create = function(){
     this.viewContent.style.position = "absolute";
     this.viewContent.style.width = sw + 'px';
     this.viewContent.style.height = sh + 'px';
-    this.viewContent.style.left = this.x + 'px';
-    this.viewContent.style.top = this.y + 'px';
+    this.viewContent.style.left = '0px';
+    this.viewContent.style.top = '0px';
+    this.viewContent.style.transform = `translate(${this.x}px,${this.y}px) rotate(0deg)`;
 
     this.parent.appendChild(this.viewContent);
 }
@@ -146,10 +147,11 @@ Snake.prototype.strategies = {
         newBody.create();
 
         // 在下个到达的点创建蛇头
-        var newHead = new Square(this.head.x / sw + this.direction.x,
-            this.head.y / sh + this.direction.y, 'snakeHead');
+        var nextX = this.head.x / sw + this.direction.x;
+        var nextY = this.head.y / sh + this.direction.y;
+        var newHead = new Square(nextX, nextY, 'snakeHead');
         newHead.create();
-        newHead.viewContent.style.transform = 'rotate('+this.direction.rotate+'deg)';
+        newHead.viewContent.style.transform = `translate(${nextX*sw}px,${nextY*sh}px) rotate(${this.direction.rotate}deg)`;
         newHead.last = null;
         newHead.next = newBody;
         newBody.last = newHead;
@@ -213,8 +215,9 @@ function createFood(){
         
     var foodDom = document.querySelector('.food');
     if (foodDom){
-        foodDom.style.left = x * sw + 'px';
-        foodDom.style.top = y * sh + 'px';
+        foodDom.style.left = '0px';
+        foodDom.style.top = '0px';
+        foodDom.style.transform = `translate(${x*sw}px,${y*sh}px)`
     } else{
         food = new Square(x, y, 'food');
         food.create();
