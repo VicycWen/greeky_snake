@@ -6,7 +6,6 @@ closeZone[0].onclick = function() {
     // this.parentNode.className = this.parentNode.className + ' hide';
     
     this.parentNode.classList.add('hide');
-    console.log(this.parentNode.classList)
     // removeGreyBackground();
 }
 
@@ -22,26 +21,24 @@ helpBtn.onclick = function(){
 }
 
 // 操作模式
-function operationMode(){
-    this.clickMode = null;
-    this.keyboardMode = null;
-    this.pauseClick = null;
+const operationMode = {
+    clickMode : null,
+    keyboardMode : null,
+    pauseClick : null
 }
 
 operationMode.clickMode = function mouseClickOperation(event) {
     var e = event;
-    // console.log(e);
     const x1 = e.pageX;
     const y1 = e.pageY;
 
     var snakeHead = document.querySelector('.snakeHead');
     if (snakeHead){
 
-        snakeHeadPos = getElementPagePosition(snakeHead);
+        const snakeHeadPos = getOffsetRect(snakeHead);
         const x0 = snakeHeadPos.x;
         const y0 = snakeHeadPos.y;
         let newDirection = calculateDirection(x0,y0,x1,y1);
-        // console.log(newDirection);
 
         if (newDirection == 'right' && snake.direction != snake.directionNum.left){
             snake.direction = snake.directionNum.right;
@@ -88,24 +85,11 @@ function calculateDirection(x0,y0,x1,y1){
     }
 }
 
-function getElementPagePosition(element){
-    //计算x坐标
-    var actualLeft = element.offsetLeft;
-    var current = element.offsetParent;
-    while (current !== null){
-      actualLeft += current.offsetLeft;
-      current = current.offsetParent;
-    }
-    //计算y坐标
-    var actualTop = element.offsetTop;
-    var current = element.offsetParent;
-    while (current !== null){
-      actualTop += (current.offsetTop+current.clientTop);
-      current = current.offsetParent;
-    }
-    //返回结果
-    return {x: actualLeft, y: actualTop}
-  }
+function getOffsetRect(elem) {
+    var box = elem.getBoundingClientRect()
+    return { x: Math.round(box.left), y: Math.round(box.top) }
+}
+
   
 operationMode.keyboardMode = function(ev){
     // alert(ev.code); // 显示键盘字符串

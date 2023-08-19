@@ -17,7 +17,6 @@ function Square(x,y,className){
     this.viewContent = document.createElement('div');
     this.viewContent.className=this.class;
     this.parent = document.getElementById('snakeWrap');
-    
 }
 
 // 创建方块的样式
